@@ -1,0 +1,29 @@
+// Color Hunter 실시간 게임 서버 (Cloudflare Workers + Durable Objects, 무료 플랜용 SQLite DO)
+// 배포:        npx wrangler deploy                     → https://color-hunter.<계정 서브도메인>.workers.dev
+// 비밀 값:     npx wrangler secret put ROOM_CODE_SECRET (코드·저장소에 넣지 않음)
+// 테스트 서버(선택): npx wrangler deploy --env beta    → color-hunter-beta
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "color-hunter",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-09-01",
+  "observability": { "enabled": true },
+  "vars": {
+    // 웹소켓·방 만들기를 허용할 웹 주소(쉼표로 구분, 경로 없이). GitHub Pages + 로컬 개발
+    "ALLOWED_ORIGINS": "https://dlwjdskfcl.github.io,http://localhost:3000"
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "ROOM", "class_name": "Room" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
+  "env": {
+    "beta": {
+      "name": "color-hunter-beta",
+      "vars": { "ALLOWED_ORIGINS": "https://dlwjdskfcl.github.io,http://localhost:3000" },
+      "durable_objects": {
+        "bindings": [{ "name": "ROOM", "class_name": "Room" }]
+      },
+      "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }]
+    }
+  }
+}

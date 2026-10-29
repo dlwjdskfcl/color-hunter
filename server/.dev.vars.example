@@ -1,0 +1,5 @@
+# 로컬 개발용 (wrangler dev). 이 파일을 .dev.vars 로 복사해서 사용. .dev.vars 는 git 에 올리지 않음.
+ROOM_CODE_SECRET=change-me-local-dev-secret
+ALLOWED_ORIGINS=*
+# 방 조회에 저장소 쓰기 횟수 포함 (측정용, 운영에선 넣지 않음)
+EXPOSE_METRICS=1
